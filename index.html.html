@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Richard Araujo // Full Stack, Automation & AppSec Portfolio</title>
+  
+  <style>
+    /* RESET & VARIÁVEIS DE DESIGN */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: #06040b;
+      color: #f3f4f6;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* TEXTURA DE FUNDO MESH + BRILHOS NEON */
+    .bg-grid-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-image: 
+        radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+      background-size: 28px 28px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .glow-orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(100px);
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.35;
+      animation: float-orb 18s ease-in-out infinite alternate;
+    }
+
+    .orb-purple {
+      width: 500px;
+      height: 500px;
+      background: #7c3aed;
+      top: -100px;
+      left: -100px;
+    }
+
+    .orb-green {
+      width: 450px;
+      height: 450px;
+      background: #10b981;
+      bottom: -100px;
+      right: -100px;
+      animation-delay: -9s;
+    }
+
+    @keyframes float-orb {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(60px, 80px) scale(1.1); }
+    }
+
+    /* CONTAINER PRINCIPAL */
+    .page-wrapper {
+      position: relative;
+      z-index: 1;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 20px 80px;
+    }
+
+    /* BARRA SUPERIOR DE ÁUDIO / MUTE TOGGLE */
+    .top-controls-bar {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 15px;
+    }
+
+    .sound-toggle-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(192, 132, 252, 0.3);
+      color: #c084fc;
+      padding: 6px 14px;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .sound-toggle-btn:hover {
+      background: rgba(192, 132, 252, 0.15);
+      border-color: #34d399;
+      color: #34d399;
+      transform: translateY(-2px);
+    }
+
+    /* HERO WINDOW */
+    .app-window {
+      background: rgba(15, 11, 26, 0.85);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 20px;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7),
+                  0 0 50px rgba(124, 58, 237, 0.18);
+      padding: 35px 40px 45px;
+      margin-bottom: 70px;
+    }
+
+    .window-dots {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 35px;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+    .dot-red { background: #ff5f56; }
+    .dot-yellow { background: #ffbd2e; }
+    .dot-green { background: #27c93f; }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(192, 132, 252, 0.25);
+      padding: 6px 16px;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 22px;
+    }
+
+    .badge-dev { color: #ffffff; font-weight: 700; letter-spacing: 0.5px; }
+    .badge-status-dot {
+      width: 8px;
+      height: 8px;
+      background-color: #10b981;
+      border-radius: 50%;
+      box-shadow: 0 0 10px #10b981, 0 0 20px #10b981;
+      animation: pulse-green 2s infinite;
+    }
+    .badge-text { color: #34d399; }
+
+    h1.hero-title {
+      font-size: clamp(2.4rem, 4.2vw, 3.6rem);
+      font-weight: 900;
+      letter-spacing: -1px;
+      line-height: 1.1;
+      margin-bottom: 18px;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, #ffffff 35%, #c084fc 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    p.hero-bio {
+      font-size: 1.05rem;
+      color: #9ca3af;
+      line-height: 1.65;
+      max-width: 530px;
+      margin-bottom: 30px;
+    }
+
+    p.hero-bio strong { color: #e5e7eb; }
+
+    .social-section-title {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #6b7280;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    .social-group {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .social-card {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 46px;
+      height: 46px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .social-card svg {
+      width: 22px;
+      height: 22px;
+      fill: #c084fc;
+      transition: fill 0.3s ease;
+    }
+
+    .social-card:hover {
+      background: rgba(192, 132, 252, 0.15);
+      border-color: #c084fc;
+      transform: translateY(-4px);
+      box-shadow: 0 0 20px rgba(192, 132, 252, 0.5);
+    }
+
+    .social-card:hover svg { fill: #ffffff; }
+
+    .cv-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 22px;
+      height: 46px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 12px;
+      color: #e5e7eb;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .cv-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.3);
+      transform: translateY(-4px);
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+    }
+
+    /* TERMINAL WIDGET */
+    .visual-container {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .orbit-ring {
+      position: absolute;
+      width: 330px;
+      height: 330px;
+      border: 1.5px dashed rgba(192, 132, 252, 0.3);
+      border-radius: 50%;
+      animation: rotate-slow 25s linear infinite;
+    }
+
+    .orbit-ring-2 {
+      position: absolute;
+      width: 380px;
+      height: 240px;
+      border: 1.5px dashed rgba(167, 139, 250, 0.22);
+      border-radius: 50%;
+      transform: rotate(-25deg);
+      animation: rotate-slow 35s linear infinite reverse;
+    }
+
+    .terminal-card {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 360px;
+      background: rgba(20, 14, 36, 0.92);
+      border: 1.5px solid rgba(192, 132, 252, 0.4);
+      border-radius: 16px;
+      box-shadow: 0 0 35px rgba(124, 58, 237, 0.3),
+                  inset 0 0 18px rgba(192, 132, 252, 0.15);
+      backdrop-filter: blur(16px);
+      overflow: hidden;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
+    .terminal-card:hover {
+      border-color: #c084fc;
+      box-shadow: 0 0 50px rgba(167, 139, 250, 0.6),
+                  inset 0 0 25px rgba(192, 132, 252, 0.25);
+      transform: translateY(-4px);
+    }
+
+    .term-header {
+      background: rgba(255, 255, 255, 0.04);
+      padding: 12px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .term-title {
+      font-size: 0.78rem;
+      color: #a78bfa;
+      font-family: monospace;
+      margin-left: auto;
+      font-weight: 600;
+    }
+
+    .term-body {
+      padding: 20px;
+      font-family: 'Consolas', 'Fira Code', monospace;
+      font-size: 0.82rem;
+      line-height: 1.6;
+    }
+
+    .t-purple { color: #c084fc; }
+    .t-green { color: #34d399; font-weight: bold; }
+    .t-cyan { color: #38bdf8; }
+    .t-gray { color: #6b7280; }
+
+    .term-status-line {
+      color: #34d399;
+      font-weight: 700;
+      margin-top: 6px;
+      font-size: 0.83rem;
+    }
+
+    .term-link-action {
+      margin-top: 14px;
+      padding-top: 10px;
+      border-top: 1px dashed rgba(192, 132, 252, 0.25);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #a78bfa;
+      font-size: 0.78rem;
+    }
+
+    .cursor-blink {
+      display: inline-block;
+      width: 7px;
+      height: 14px;
+      background: #c084fc;
+      box-shadow: 0 0 8px #c084fc;
+      margin-left: 4px;
+      animation: blink 1s infinite;
+      vertical-align: middle;
+    }
+
+    /* BOTÃO NEON EMAIL */
+    .copy-email-wrapper {
+      margin-top: 45px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .neon-email-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(16, 185, 129, 0.06);
+      border: 2px solid #10b981;
+      border-radius: 14px;
+      padding: 14px 36px;
+      color: #ffffff;
+      font-size: 1.05rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 0 20px rgba(16, 185, 129, 0.35),
+                  inset 0 0 12px rgba(16, 185, 129, 0.15);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .neon-email-btn:hover {
+      background: rgba(16, 185, 129, 0.15);
+      box-shadow: 0 0 35px rgba(16, 185, 129, 0.6),
+                  inset 0 0 20px rgba(16, 185, 129, 0.25);
+      transform: scale(1.03);
+    }
+
+    .email-icon {
+      width: 20px;
+      height: 20px;
+      fill: #34d399;
+    }
+
+    .feedback-toast {
+      margin-top: 12px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #34d399;
+      letter-spacing: 1px;
+      text-shadow: 0 0 10px rgba(52, 211, 153, 0.5);
+      opacity: 0;
+      transform: translateY(-6px);
+      transition: all 0.2s ease;
+    }
+
+    .feedback-toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .scroll-hint {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      color: #6b7280;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-top: 25px;
+      animation: bounce 2s infinite;
+    }
+
+    /* SEÇÕES GERAIS */
+    .section-block {
+      margin-bottom: 70px;
+    }
+
+    .section-title-group {
+      margin-bottom: 30px;
+    }
+
+    .section-subtitle {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #c084fc;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .section-main-title {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    /* SEÇÃO CERTIFICAÇÕES */
+    .certs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .cert-card {
+      background: rgba(15, 11, 26, 0.8);
+      border: 1px solid rgba(192, 132, 252, 0.25);
+      border-radius: 18px;
+      padding: 24px;
+      display: flex;
+      gap: 18px;
+      align-items: flex-start;
+      backdrop-filter: blur(16px);
+      transition: all 0.3s ease;
+    }
+
+    .cert-card:hover {
+      border-color: #10b981;
+      box-shadow: 0 10px 30px rgba(16, 185, 129, 0.15);
+      transform: translateY(-3px);
+    }
+
+    .cert-icon-box {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+
+    .cert-icon-box.ef-box {
+      background: rgba(56, 189, 248, 0.12);
+      border-color: rgba(56, 189, 248, 0.3);
+    }
+
+    .cert-content h4 {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 4px;
+    }
+
+    .cert-issuer {
+      font-size: 0.82rem;
+      color: #34d399;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+
+    .cert-issuer.ef-issuer {
+      color: #38bdf8;
+    }
+
+    .cert-desc {
+      font-size: 0.85rem;
+      color: #9ca3af;
+      line-height: 1.5;
+      margin-bottom: 8px;
+    }
+
+    .cert-code-tag {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-family: monospace;
+      color: #a78bfa;
+      background: rgba(167, 139, 250, 0.1);
+      border: 1px solid rgba(167, 139, 250, 0.2);
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+
+    /* TECH STACK GRID */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .skill-card {
+      background: rgba(15, 11, 26, 0.65);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 24px;
+      backdrop-filter: blur(12px);
+      transition: all 0.3s ease;
+    }
+
+    .skill-card.highlight-cyber {
+      border-color: rgba(16, 185, 129, 0.35);
+      background: rgba(16, 185, 129, 0.03);
+    }
+
+    .skill-card:hover {
+      border-color: rgba(192, 132, 252, 0.4);
+      transform: translateY(-3px);
+    }
+
+    .skill-category-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #f3f4f6;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .skill-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .pill {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 5px 12px;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      color: #d1d5db;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+
+    .pill:hover {
+      border-color: #34d399;
+      color: #34d399;
+      background: rgba(52, 211, 153, 0.08);
+    }
+
+    /* PROJETOS REAIS */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+    }
+
+    .project-card-full {
+      background: rgba(15, 11, 26, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 18px;
+      padding: 28px;
+      backdrop-filter: blur(16px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-card-full::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, #c084fc, #10b981);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .project-card-full:hover {
+      border-color: rgba(192, 132, 252, 0.4);
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.5), 0 0 25px rgba(124, 58, 237, 0.15);
+    }
+
+    .project-card-full:hover::before { opacity: 1; }
+
+    .project-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .project-badge-tag {
+      font-size: 0.75rem;
+      font-family: monospace;
+      color: #38bdf8;
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+
+    .project-title-text {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 10px;
+    }
+
+    .project-description {
+      font-size: 0.9rem;
+      color: #9ca3af;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .project-highlights-list {
+      list-style: none;
+      margin-bottom: 22px;
+    }
+
+    .project-highlights-list li {
+      font-size: 0.83rem;
+      color: #d1d5db;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .project-highlights-list li::before {
+      content: '⚡';
+      font-size: 0.75rem;
+    }
+
+    .project-footer-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #c084fc;
+      font-size: 0.88rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .project-card-full:hover .project-footer-link { color: #34d399; }
+
+    .project-status-wip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #fbbf24;
+      background: rgba(251, 191, 36, 0.1);
+      border: 1px solid rgba(251, 191, 36, 0.25);
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    /* ROADMAP */
+    .roadmap-container {
+      background: rgba(124, 58, 237, 0.05);
+      border: 1px dashed rgba(192, 132, 252, 0.3);
+      border-radius: 20px;
+      padding: 35px;
+      backdrop-filter: blur(16px);
+    }
+
+    .roadmap-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .roadmap-badge {
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #10b981;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      padding: 4px 12px;
+      border-radius: 50px;
+    }
+
+    .roadmap-title {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .roadmap-intro {
+      font-size: 0.95rem;
+      color: #9ca3af;
+      line-height: 1.6;
+      margin-bottom: 25px;
+      max-width: 800px;
+    }
+
+    .roadmap-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .roadmap-card {
+      background: rgba(15, 11, 26, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 20px;
+    }
+
+    .roadmap-card h4 {
+      font-size: 1.05rem;
+      color: #c084fc;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .roadmap-card p {
+      font-size: 0.85rem;
+      color: #9ca3af;
+      line-height: 1.5;
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding-top: 40px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      color: #6b7280;
+      font-size: 0.85rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .back-to-top {
+      color: #c084fc;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.2s ease;
+    }
+
+    .back-to-top:hover { color: #34d399; }
+
+    /* ANIMAÇÕES */
+    @keyframes pulse-green {
+      0%, 100% { opacity: 0.6; box-shadow: 0 0 8px #10b981; }
+      50% { opacity: 1; box-shadow: 0 0 18px #10b981, 0 0 30px #10b981; }
+    }
+
+    @keyframes rotate-slow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-6px); }
+      60% { transform: translateY(-3px); }
+    }
+
+    /* RESPONSIVIDADE */
+    @media (max-width: 820px) {
+      .hero-grid { grid-template-columns: 1fr; text-align: center; }
+      p.hero-bio { margin: 0 auto 25px; }
+      .social-group { justify-content: center; }
+      .visual-container { margin-top: 30px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg-grid-overlay"></div>
+  <div class="glow-orb orb-purple"></div>
+  <div class="glow-orb orb-green"></div>
+
+  <div class="page-wrapper">
+
+    <!-- CONTROLE DE ÁUDIO NO TOPO -->
+    <div class="top-controls-bar">
+      <button class="sound-toggle-btn" id="btnToggleSound">
+        <span id="soundIcon">🔊</span>
+        <span id="soundText">Efeitos Sonoros: ON</span>
+      </button>
+    </div>
+
+    <!-- HERO SECTION -->
+    <header class="app-window" id="hero">
+      <div class="window-dots">
+        <span class="dot dot-red"></span>
+        <span class="dot dot-yellow"></span>
+        <span class="dot dot-green"></span>
+      </div>
+
+      <div class="hero-grid">
+        <div class="hero-left">
+          <div class="header-badge">
+            <span class="badge-dev">RICHARD / DEV &amp; SEC</span>
+            <span class="badge-status-dot"></span>
+            <span class="badge-text">Automação &amp; Programação Defensiva</span>
+          </div>
+
+          <h1 class="hero-title">Olá, sou o Richard.</h1>
+
+          <p class="hero-bio">
+            Desenvolvedor especializado em <strong>Automação de Processos</strong>, <strong>Programação Defensiva</strong> e <strong>Segurança da Informação (AppSec)</strong>. Unindo análise de dados, resiliência de código e princípios de Hacking Ético.
+          </p>
+
+          <p class="social-section-title">Redes &amp; Contatos</p>
+          <div class="social-group">
+            <a class="social-card" href="https://github.com/Richard-Data01" target="_blank" title="GitHub">
+              <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+            </a>
+            <a class="social-card" href="https://www.linkedin.com/in/richard-dossantos" target="_blank" title="LinkedIn">
+              <svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+            </a>
+            <a class="cv-btn" href="https://github.com/Richard-Data01" target="_blank">
+              Ver GitHub ↗
+            </a>
+          </div>
+        </div>
+
+        <!-- TERMINAL WIDGET -->
+        <div class="visual-container">
+          <div class="orbit-ring"></div>
+          <div class="orbit-ring-2"></div>
+          
+          <a class="terminal-card" href="https://github.com/Richard-Data01/logica-de-programacao-py/blob/main/v2_programacao_defensiva.py" target="_blank" title="Abrir no GitHub">
+            <div class="term-header">
+              <span class="dot dot-red"></span>
+              <span class="dot dot-yellow"></span>
+              <span class="dot dot-green"></span>
+              <span class="term-title">defensive_flow.py</span>
+            </div>
+            <div class="term-body">
+              <div><span class="t-purple">import</span> re, sys</div>
+              <div class="t-gray"># Sanitização e Validação em SI</div>
+              <div><span class="t-purple">try</span>:</div>
+              <div style="padding-left: 14px;">data = input_data.<span class="t-cyan">strip</span>()</div>
+              <div style="padding-left: 14px;">valid = re.<span class="t-cyan">search</span>(<span class="t-green">r'\d+'</span>)</div>
+              
+              <div class="term-status-line">[✓] Status: 200 OK</div>
+              <div class="term-status-line">[✓] Zero exceções</div>
+              
+              <div class="term-link-action">
+                <span class="t-cyan">&gt;</span> Ready <span class="cursor-blink"></span>
+                <span style="margin-left: auto; font-size: 0.75rem;">Ver no GitHub ↗</span>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- BOTÃO NEON EMAIL -->
+      <div class="copy-email-wrapper">
+        <button class="neon-email-btn" id="btnCopyEmail">
+          <svg class="email-icon" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+          <span id="emailText">richard.araujo97@outlook.com</span>
+        </button>
+        <div class="feedback-toast" id="copyFeedback">✓ E-MAIL COPIADO!</div>
+      </div>
+
+      <div class="scroll-hint">
+        <span>Role para ver as certificações &amp; stack</span> 🡳
+      </div>
+    </header>
+
+    <!-- SEÇÃO 1: CERTIFICAÇÕES OFICIAIS -->
+    <section class="section-block">
+      <div class="section-title-group">
+        <p class="section-subtitle">// Credenciais Oficiais</p>
+        <h2 class="section-main-title">Certificações &amp; Licenças</h2>
+      </div>
+
+      <div class="certs-grid">
+        <div class="cert-card">
+          <div class="cert-icon-box">🛡️</div>
+          <div class="cert-content">
+            <h4>Ethical Hacker</h4>
+            <p class="cert-issuer">Cisco Networking Academy</p>
+            <p class="cert-desc">
+              Capacitação prática cobrindo segurança ofensiva, Penetration Testing, varredura de vulnerabilidades web (OWASP Top 10), engenharia social, análise de código e defesa de aplicações.
+            </p>
+          </div>
+        </div>
+
+        <div class="cert-card">
+          <div class="cert-icon-box">🏅</div>
+          <div class="cert-content">
+            <h4>Digital Safety and Security Awareness</h4>
+            <p class="cert-issuer">Cisco Networking Academy</p>
+            <p class="cert-desc">
+              Insígnia digital oficial comprovando domínio dos fundamentos da segurança cibernética, higiene digital, análise de riscos e proteção contra ameaças corporativas.
+            </p>
+            <span class="cert-code-tag">ID: 11a77383-8e42-487b-8b26-41780208929e</span>
+          </div>
+        </div>
+
+        <div class="cert-card">
+          <div class="cert-icon-box ef-box">🌐</div>
+          <div class="cert-content">
+            <h4>Certificado EF SET Inglês 60/100 (B2 Independente)</h4>
+            <p class="cert-issuer ef-issuer">EF SET Assessment</p>
+            <p class="cert-desc">
+              Avaliação padronizada internacional comprovando proficiência B2 em leitura, escuta e comunicação em Inglês geral e Inglês para Negócios.
+            </p>
+            <span class="cert-code-tag">ID: is3LFX</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEÇÃO 2: TECH STACK + CARD APPSEC -->
+    <section class="section-block">
+      <div class="section-title-group">
+        <p class="section-subtitle">// Ferramentas &amp; Competências</p>
+        <h2 class="section-main-title">Stack Tecnológico &amp; Domínios Práticos</h2>
+      </div>
+
+      <div class="skills-grid">
+        <div class="skill-card highlight-cyber">
+          <h3 class="skill-category-title">🛡️ Cibersegurança &amp; AppSec</h3>
+          <div class="skill-pills">
+            <span class="pill">Hacking Ético (Cisco)</span>
+            <span class="pill">OWASP Top 10</span>
+            <span class="pill">Penetration Testing</span>
+            <span class="pill">Sanitização &amp; Input Validation</span>
+            <span class="pill">Análise de Vulnerabilidades</span>
+          </div>
+        </div>
+
+        <div class="skill-card">
+          <h3 class="skill-category-title">⚙️ Backend &amp; Automação</h3>
+          <div class="skill-pills">
+            <span class="pill">Python 3</span>
+            <span class="pill">Programação Defensiva</span>
+            <span class="pill">RPA (Selenium/BS4)</span>
+            <span class="pill">Regex &amp; Trimming</span>
+            <span class="pill">VBA &amp; Macros</span>
+          </div>
+        </div>
+
+        <div class="skill-card">
+          <h3 class="skill-category-title">🗄️ Dados, SQL &amp; BI</h3>
+          <div class="skill-pills">
+            <span class="pill">SQL (Queries &amp; Procedures)</span>
+            <span class="pill">Modelagem Relacional</span>
+            <span class="pill">NoSQL (MongoDB)</span>
+            <span class="pill">ETL &amp; Higienização</span>
+            <span class="pill">Power BI &amp; Dashboards</span>
+          </div>
+        </div>
+
+        <div class="skill-card">
+          <h3 class="skill-category-title">🛠️ Qualidade &amp; Engenharia</h3>
+          <div class="skill-pills">
+            <span class="pill">Git &amp; GitHub</span>
+            <span class="pill">Testes (TDD / BDD)</span>
+            <span class="pill">Engenharia de Requisitos</span>
+            <span class="pill">Diagramação UML / BPMN</span>
+            <span class="pill">ERP (TOTVS / SAYGO / SAP)</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEÇÃO 3: PROJETOS REAIS COM STATUS TRANSPARENTES -->
+    <section class="section-block">
+      <div class="section-title-group">
+        <p class="section-subtitle">// Repositórios &amp; Projetos</p>
+        <h2 class="section-main-title">Casos de Estudo &amp; Código</h2>
+      </div>
+
+      <div class="projects-grid">
+        <!-- PROJETO 1: PUBLICADO E CLICÁVEL -->
+        <div class="project-card-full">
+          <div>
+            <div class="project-header-row">
+              <span class="project-badge-tag">Python // AppSec</span>
+              <span style="color: #6b7280; font-size: 0.8rem;">Programação Defensiva</span>
+            </div>
+            <h3 class="project-title-text">Cálculo de Frete &amp; Validação v2</h3>
+            <p class="project-description">
+              Arquitetura em Python focada em sanitização estrita de entradas, prevenindo injeções de dados ruidosos e exceções em tempo de execução.
+            </p>
+            <ul class="project-highlights-list">
+              <li>Validação rigorosa com `try / except`</li>
+              <li>Encapsulamento defensivo de regras de negócio</li>
+              <li>Tratamento de exceções sem quebras</li>
+            </ul>
+          </div>
+          <a class="project-footer-link" href="https://github.com/Richard-Data01/logica-de-programacao-py" target="_blank">
+            Ver repositório no GitHub ↗
+          </a>
+        </div>
+
+        <!-- PROJETO 2: PUBLICADO E CLICÁVEL -->
+        <div class="project-card-full">
+          <div>
+            <div class="project-header-row">
+              <span class="project-badge-tag">Python // CLI</span>
+              <span style="color: #6b7280; font-size: 0.8rem;">Quiz Interativo</span>
+            </div>
+            <h3 class="project-title-text">Quiz de Operadores de Lógica</h3>
+            <p class="project-description">
+              Aplicação CLI para validação de operadores relacionais e lógicos, estruturada com fluxo contínuo e tratamento de entradas inconsistentes.
+            </p>
+            <ul class="project-highlights-list">
+              <li>Sanitização de strings (`.strip().capitalize()`)</li>
+              <li>Controle de fluxo sem pontos cegos</li>
+              <li>Resiliência contra entradas do usuário</li>
+            </ul>
+          </div>
+          <a class="project-footer-link" href="https://github.com/Richard-Data01/logica-de-programacao-py" target="_blank">
+            Ver repositório no GitHub ↗
+          </a>
+        </div>
+
+        <!-- PROJETO 3: EM FINALIZAÇÃO (SEM LINK FALSO) -->
+        <div class="project-card-full">
+          <div>
+            <div class="project-header-row">
+              <span class="project-badge-tag">Frontend // UX</span>
+              <span style="color: #6b7280; font-size: 0.8rem;">Catálogo Web</span>
+            </div>
+            <h3 class="project-title-text">Cantinho do Pão — Web App</h3>
+            <p class="project-description">
+              Interface moderna construída para catálogo comercial, focada em responsividade, usabilidade de navegação e estrutura pronta para deploy oficial.
+            </p>
+            <ul class="project-highlights-list">
+              <li>Design modular e responsivo em CSS3</li>
+              <li>Acessibilidade e usabilidade otimizadas</li>
+              <li>Aguardando homologação final de versão</li>
+            </ul>
+          </div>
+          <div>
+            <span class="project-status-wip">🚧 Em Finalização / Publicação em Breve</span>
+          </div>
+        </div>
+
+        <!-- PROJETO 4: EM CONSTRUÇÃO (SEM LINK FALSO) -->
+        <div class="project-card-full">
+          <div>
+            <div class="project-header-row">
+              <span class="project-badge-tag">Dados // Compliance</span>
+              <span style="color: #6b7280; font-size: 0.8rem;">Automação de BI</span>
+            </div>
+            <h3 class="project-title-text">Painel de Compliance &amp; Auditoria</h3>
+            <p class="project-description">
+              Sistema em estruturação para validação e higienização automatizada de bases corporativas e homologação de fornecedores.
+            </p>
+            <ul class="project-highlights-list">
+              <li>Scripts Python e macros VBA para higienização</li>
+              <li>Alertas automáticos de inconsistência</li>
+              <li>Indicadores de auditoria preventiva</li>
+            </ul>
+          </div>
+          <div>
+            <span class="project-status-wip">🛠️ Em Estruturação de Código</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEÇÃO 4: ROADMAP EM CONSTRUÇÃO -->
+    <section class="section-block">
+      <div class="roadmap-container">
+        <div class="roadmap-header">
+          <span class="roadmap-badge">⚡ Roadmap em Construção</span>
+          <h3 class="roadmap-title">Em Breve: Projetos Arquiteturais &amp; Robustos</h3>
+        </div>
+        <p class="roadmap-intro">
+          Esta seção sinaliza aos recrutadores as próximas entregas e tecnologias que estou desenvolvendo. O objetivo é demonstrar evolução contínua em arquitetura segura, persistência SQL e automação avançada.
+        </p>
+
+        <div class="roadmap-grid">
+          <div class="roadmap-card">
+            <h4>🗄️ Pipelines SQL &amp; Data Warehousing</h4>
+            <p>Integração com PostgreSQL e SQL Server, com rotinas de ETL, procedures auditáveis e higienização pesada de dados.</p>
+          </div>
+
+          <div class="roadmap-card">
+            <h4>🛡️ Audit Tools &amp; OWASP Scanner</h4>
+            <p>Ferramentas em Python para análise automatizada de código, verificação de cabeçalhos HTTP e auditoria de vulnerabilidades web.</p>
+          </div>
+
+          <div class="roadmap-card">
+            <h4>🌐 Aplicações Full-Stack Seguras</h4>
+            <p>Aplicações web consumindo APIs RESTful com autenticação JWT, controle de acesso baseado em funções (RBAC) e hospedagem Cloud.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <p>© 2026 Richard Araujo dos Santos. Full Stack, Automação &amp; AppSec.</p>
+      <a class="back-to-top" href="#hero">↑ Voltar ao topo</a>
+    </footer>
+
+  </div>
+
+  <script>
+    /* LÓGICA DE COPIAR E-MAIL */
+    const btn = document.getElementById('btnCopyEmail');
+    const email = document.getElementById('emailText');
+    const feedback = document.getElementById('copyFeedback');
+
+    btn.addEventListener('click', () => {
+      navigator.clipboard.writeText(email.innerText).then(() => {
+        feedback.classList.add('show');
+        btn.style.boxShadow = '0 0 45px rgba(16, 185, 129, 0.8), inset 0 0 20px rgba(16, 185, 129, 0.3)';
+
+        setTimeout(() => {
+          feedback.classList.remove('show');
+          btn.style.boxShadow = '';
+        }, 2000);
+      });
+    });
+
+    /* LÓGICA DE ÁUDIO WEB AUDIO API (MICRO-SOM HOVER) */
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    let audioCtx = null;
+    let soundEnabled = true;
+
+    const btnToggleSound = document.getElementById('btnToggleSound');
+    const soundIcon = document.getElementById('soundIcon');
+    const soundText = document.getElementById('soundText');
+
+    btnToggleSound.addEventListener('click', () => {
+      soundEnabled = !soundEnabled;
+      if (soundEnabled) {
+        soundIcon.innerText = '🔊';
+        soundText.innerText = 'Efeitos Sonoros: ON';
+        btnToggleSound.style.borderColor = 'rgba(192, 132, 252, 0.3)';
+        btnToggleSound.style.color = '#c084fc';
+      } else {
+        soundIcon.innerText = '🔇';
+        soundText.innerText = 'Efeitos Sonoros: OFF';
+        btnToggleSound.style.borderColor = 'rgba(239, 68, 68, 0.4)';
+        btnToggleSound.style.color = '#ef4444';
+      }
+    });
+
+    function playHoverSound() {
+      if (!soundEnabled) return;
+      
+      try {
+        if (!audioCtx) {
+          audioCtx = new AudioContext();
+        }
+        if (audioCtx.state === 'suspended') {
+          audioCtx.resume();
+        }
+
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+
+        // Frequência suave e curta (estilo "blip" futurista)
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(750, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(220, audioCtx.currentTime + 0.04);
+
+        // Volume bem sutil (0.025 = 2.5%)
+        gain.gain.setValueAtTime(0.025, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.04);
+
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.04);
+      } catch (e) {
+        // Ignora silenciosamente se o navegador restringir áudio
+      }
+    }
+
+    // Aplica o efeito sonoro a elementos interativos
+    document.querySelectorAll('a, button, .project-card-full, .cert-card, .skill-card, .terminal-card').forEach(element => {
+      element.addEventListener('mouseenter', playHoverSound);
+    });
+  </script>
+
+</body>
+</html>
